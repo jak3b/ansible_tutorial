@@ -2,16 +2,13 @@
 - hosts: all
   become: true
   tasks:
-    - name: update repository index
+    - name: Install apache2 and php package and misc
       apt:
-        update_cache: yes
-
-    - name: install apache2 package
-      apt:
-        name: apache2
+        name:
+          - apache2
+          - libapache2-mod-php
+          - mc
+          - htop
+          - vim-nox
         state: latest
-
-    - name: add php support for apache2
-      apt:
-        name: libapache2-mod-php
-        state: latest
+        update_cache: true
