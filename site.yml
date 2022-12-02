@@ -1,0 +1,34 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: install updates
+      apt:
+        upgrade: dist
+        update_cache: yes
+
+- hosts: web_servers
+  become: true
+  tasks:
+    - name: Install apache2 and php package and misc
+      apt:
+        name:
+          - apache2
+          - libapache2-mod-php
+        state: latest
+
+- hosts: db_servers
+  become: true
+  tasks:
+    - name: install mariadb package
+      apt:
+        name: mariadb-server
+        state: latest
+
+- hosts: file_servers
+  become: true
+  tasks:
+    - name: install samba
+      package:
+        name: samba
+        state: latest
