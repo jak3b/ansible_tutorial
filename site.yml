@@ -2,7 +2,7 @@
 - hosts: all
   become: true
   pre_tasks:
-    - name: install updates
+    - name: Install updates
       tags: always
       apt:
         upgrade: dist
@@ -18,7 +18,7 @@
           - apache2
           - libapache2-mod-php
         state: latest
-    - name: copy default html file for site
+    - name: Copy default html file for site
       tags: apache,apache2,ubuntu
       copy:
         src: default_site.html
@@ -30,7 +30,7 @@
 - hosts: db_servers
   become: true
   tasks:
-    - name: install mariadb package
+    - name: Install mariadb package
       tags: db,mariadb,ubuntu
       apt:
         name: mariadb-server
@@ -39,7 +39,7 @@
 - hosts: file_servers
   become: true
   tasks:
-    - name: install samba
+    - name: Install samba
       tags: samba
       package:
         name: samba
