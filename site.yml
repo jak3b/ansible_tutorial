@@ -2,54 +2,29 @@
 - hosts: all
   become: true
   pre_tasks:
-    - name: Update repo cache
+    - name: update repository index (Ubuntu)
       tags: always
       apt:
         update_cache: yes
       changed_when: false
+      when: ansible_distribution == "Ubuntu"
+
 - hosts: all
   become: true
-  tasks:
-    - name: Add ssh key for simone
-      tags: always
-      authorized_key:
-        user: simone
-        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6EK3LY1zbhIjCWe4bJPu+cROR3V1Z24Mi/JM4wZtS6 jak3b@wintermute"
+  roles:
+    - base
 
 - hosts: web_servers
   become: true
-  tasks:
-    - name: Install apache2 and php package and misc
-      tags: apache,apache2,ubuntu
-      apt:
-        name:
-          - apache2
-          - libapache2-mod-php
-        state: latest
-
-    - name: Copy default html file for site
-      tags: apache,apache2,ubuntu
-      copy:
-        src: default_site.html
-        dest: /var/www/html/index.html
-        owner: root
-        group: root
-        mode: 0644
+  roles:
+    - web_servers
 
 - hosts: db_servers
   become: true
-  tasks:
-    - name: Install mariadb package
-      tags: db,mariadb,ubuntu
-      apt:
-        name: mariadb-server
-        state: latest
+  roles:
+    - db_servers
 
 - hosts: file_servers
   become: true
-  tasks:
-    - name: Install samba
-      tags: samba
-      package:
-        name: samba
-        state: latest
+  roles:
+    - file_servers

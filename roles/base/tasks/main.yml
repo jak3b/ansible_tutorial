@@ -1,0 +1,4 @@
+- name: add ssh key for simone
+  authorized_key:
+    user: simone
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6EK3LY1zbhIjCWe4bJPu+cROR3V1Z24Mi/JM4wZtS6 jak3b@wintermute"
